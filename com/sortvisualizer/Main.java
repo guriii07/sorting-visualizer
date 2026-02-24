@@ -8,6 +8,9 @@ import java.awt.*;
 
 public class Main {
     public static void main(String[] args) {
+        try { UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); } 
+        catch (Exception e) {}
+
         SwingUtilities.invokeLater(() -> {
             // 1. Setup Data
             ArrayState state = new ArrayState(100); 
@@ -22,22 +25,28 @@ public class Main {
 
             // 3. Setup Buttons
             JPanel buttonPanel = new JPanel();
-            buttonPanel.setBackground(Color.DARK_GRAY);
-
+            buttonPanel.setBackground(new Color(40, 40, 40)); 
+            buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            
+            JComboBox<String> algoBox = new JComboBox<>(controller.getAlgorithmNames());
+            algoBox.addActionListener(e -> controller.setAlgorithm(algoBox.getSelectedIndex()));
             JButton startBtn = new JButton("Start");
             JButton pauseBtn = new JButton("Pause/Resume");
             JButton resetBtn = new JButton("New Array");
             JSlider speedSlider = new JSlider(1, 100, 50);
+            speedSlider.setBackground(new Color(40, 40, 40));
 
             startBtn.addActionListener(e -> controller.startSorting());
             pauseBtn.addActionListener(e -> controller.togglePause());
             resetBtn.addActionListener(e -> controller.generateArray(100));
             speedSlider.addChangeListener(e -> state.setDelay(101 - speedSlider.getValue()));
 
+            buttonPanel.add(new JLabel("Algo:") {{ setForeground(Color.WHITE); }});
+            buttonPanel.add(algoBox);
             buttonPanel.add(startBtn);
             buttonPanel.add(pauseBtn);
             buttonPanel.add(resetBtn);
-            buttonPanel.add(new JLabel("Speed:"));
+            buttonPanel.add(new JLabel("Speed:") {{ setForeground(Color.WHITE); }});
             buttonPanel.add(speedSlider);
 
             // 4. Assemble

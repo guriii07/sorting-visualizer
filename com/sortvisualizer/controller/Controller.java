@@ -12,12 +12,37 @@ public class Controller {
     private ISortingAlgorithm currentAlgo;
     private Thread sortingThread;
 
+    private ISortingAlgorithm[] availableAlgorithms = {
+        new BubbleSort(),
+        new MergeSort(),
+        new QuickSort(),
+        new InsertionSort(),
+        new SelectionSort(), // If you have it
+        new CountingSort(),
+        new RadixSort(),
+        new BucketSort()
+    };
+
     public Controller(ArrayState state, VisualizationPanel panel) {
         this.state = state;
         this.panel = panel;
-        this.currentAlgo = new BubbleSort(); 
+        this.currentAlgo = availableAlgorithms[0]; // Default to first algorithm 
     }
 
+    public void setAlgorithm(int index) {
+        if (index >= 0 && index < availableAlgorithms.length) {
+            this.currentAlgo = availableAlgorithms[index];
+        }
+    }
+
+    public String[] getAlgorithmNames() {
+        String[] names = new String[availableAlgorithms.length];
+        for (int i = 0; i < availableAlgorithms.length; i++) {
+            names[i] = availableAlgorithms[i].getName();
+        }
+        return names;
+    }
+    
     public void startSorting() {
         if (sortingThread != null && sortingThread.isAlive()) {
              // If already running, just ensure we aren't paused
