@@ -38,3 +38,4 @@ A sophisticated, dark-themed desktop application built with Java (Swing) that vi
 ```bash
 git clone [https://github.com/YOUR_USERNAME/Sorting-Visualizer-Java.git](https://github.com/YOUR_USERNAME/Sorting-Visualizer-Java.git)
 cd Sorting-Visualizer-Java
+To run directly use the command-javac com\sortvisualizer\Main.java && java com.sortvisualizer.Main
